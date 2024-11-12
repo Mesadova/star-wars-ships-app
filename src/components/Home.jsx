@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { styled, createGlobalStyle  } from 'styled-components'
 import { Tab, Tabs } from 'react-bootstrap'
-import RenderShipCard from './components/RenderShipCard'
+import RenderShipCard from './RenderShipCard'
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -54,18 +54,7 @@ export const ShipsContainer = styled.div`
   gap: 25px;
 `
 
-const App = () => {
-  const [shipCollection, setShipCollection] = useState([])
-
-  useEffect(() => {
-    console.log('effect')    
-    axios      
-    .get('https://swapi.dev/api/starships')      
-    .then(response => {
-      console.log(response.data.results)
-      setShipCollection(response.data.results)})  
-    }, [])
-
+function Home() {
   return (
     <div>
       <GlobalStyle />
@@ -77,14 +66,6 @@ const App = () => {
           <Tab eventKey="home" title="HOME">
           </Tab>
           <Tab eventKey="starships" title="STARSHIPS">
-            <ShipsContainer>
-              {shipCollection.map((element, index) => {
-                console.log(element.name)
-                return (
-                  <RenderShipCard key={index} shipName={element.name} shipModel={element.model}></RenderShipCard>
-                )
-              })}
-            </ShipsContainer>
           </Tab>
         </Tabs>
       </TabsWrapper>
@@ -92,4 +73,4 @@ const App = () => {
   )
 }
 
-export default App
+export default Home

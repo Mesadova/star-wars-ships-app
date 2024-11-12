@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { styled, createGlobalStyle  } from 'styled-components'
 import { Tab, Tabs } from 'react-bootstrap'
-import RenderShipCard from './components/RenderShipCard'
+import { Link, Outlet } from 'react-router-dom'
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -47,14 +47,7 @@ const TabsWrapper = styled.div`
   }
 `
 
-export const ShipsContainer = styled.div`
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-`
-
-const App = () => {
+const MainPageNav = () => {
   const [shipCollection, setShipCollection] = useState([])
 
   useEffect(() => {
@@ -75,16 +68,10 @@ const App = () => {
       <TabsWrapper>
         <Tabs defaultActiveKey="home" id="main-menu-tabs">
           <Tab eventKey="home" title="HOME">
+            <Link to={`starships`}></Link>
           </Tab>
           <Tab eventKey="starships" title="STARSHIPS">
-            <ShipsContainer>
-              {shipCollection.map((element, index) => {
-                console.log(element.name)
-                return (
-                  <RenderShipCard key={index} shipName={element.name} shipModel={element.model}></RenderShipCard>
-                )
-              })}
-            </ShipsContainer>
+            <Link to={`starships`}></Link>
           </Tab>
         </Tabs>
       </TabsWrapper>
@@ -92,4 +79,4 @@ const App = () => {
   )
 }
 
-export default App
+export default MainPageNav
