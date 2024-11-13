@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { styled, createGlobalStyle  } from 'styled-components'
 import { Tab, Tabs } from 'react-bootstrap'
-import { Link, Outlet } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import RenderSingularStarship from './RenderSingularStarship.jsx'
+import RenderShipCollection from './RenderShipCollection'
+import { useDispatch } from 'react-redux'
+import { useEffect } from 'react'
+import { fetchStarships } from '../store/starshipsSlice.js'
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -48,16 +51,17 @@ const TabsWrapper = styled.div`
 `
 
 const MainPageNav = () => {
-  const [shipCollection, setShipCollection] = useState([])
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('effect')    
-    axios      
-    .get('https://swapi.dev/api/starships')      
-    .then(response => {
-      console.log(response.data.results)
-      setShipCollection(response.data.results)})  
-    }, [])
+    dispatch(fetchStarships());
+  }, [dispatch]);
+
+  const navigate = useNavigate();
+  const handleSelect = (eventKey) => {
+    navigate(eventKey); 
+  }; 
 
   return (
     <div>
@@ -66,12 +70,16 @@ const MainPageNav = () => {
         <img src="../public/assets/logo.png" style={{width: '15%', marginBottom: '40px', marginTop: '20px'}}></img>
       </div>
       <TabsWrapper>
-        <Tabs defaultActiveKey="home" id="main-menu-tabs">
-          <Tab eventKey="home" title="HOME">
-            <Link to={`starships`}></Link>
+        <Tabs defaultActiveKey="/home" id="main-menu-tabs" onSelect={handleSelect} >
+          <Tab eventKey="/home" title="HOME">
           </Tab>
-          <Tab eventKey="starships" title="STARSHIPS">
-            <Link to={`starships`}></Link>
+          <Tab eventKey="/starships" title="STARSHIPS">
+            <Routes>
+                <Route path='/starships'>
+                    <Route index element={<RenderShipCollection />} />
+                    <Route path=':shipName' element={<RenderSingularStarship />} />
+                </Route>
+            </Routes>
           </Tab>
         </Tabs>
       </TabsWrapper>

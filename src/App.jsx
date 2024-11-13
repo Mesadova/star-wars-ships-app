@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { styled, createGlobalStyle  } from 'styled-components'
 import { Tab, Tabs } from 'react-bootstrap'
-import RenderShipCard from './components/RenderShipCard'
+import RenderShipCard from './components/ShipCollection'
 
 export const GlobalStyle = createGlobalStyle`
   body {

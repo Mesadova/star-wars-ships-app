@@ -1,7 +1,6 @@
 import { useRouteError } from "react-router-dom";
 
 const NotFound = () => {
-  // useRouteError provides the error that was thrown.
   const error = useRouteError();
   console.error(error);
 

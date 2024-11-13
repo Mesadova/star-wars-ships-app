@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import { useNavigate } from "react-router-dom"
 
 const ShipCard = styled.div`
     display: box;
@@ -21,13 +22,19 @@ const ShipCardInfo = styled.p`
     margin: 0;
 `
 
-const RenderShipCard = ({shipName, shipModel}) => {
+const ShipCollection = ({shipName, shipModel, index }) => {
+
+    const navigate = useNavigate();
+    const handleClick = (e, index, shipName) => {
+        navigate(`${shipName}`);
+    };
+
     return(
-        <ShipCard onClick={() => console.log('click')}>
+        <ShipCard onClick={(e) => handleClick(e, index, shipName)} value={index}>
             <ShipCardInfo>{shipName.toUpperCase()}</ShipCardInfo>
             <ShipCardInfo>{shipModel}</ShipCardInfo>
         </ShipCard>
     )
 }
 
-export default RenderShipCard
+export default ShipCollection
