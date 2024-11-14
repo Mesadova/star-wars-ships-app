@@ -15,7 +15,7 @@ export const StarshipCard = styled.div`
 `
 
 const SingularStarship = ({ starshipToRender, starshipId }) => {
-  console.log(starshipId)
+  
   return (
     <>
     <div>STARSHIP</div>

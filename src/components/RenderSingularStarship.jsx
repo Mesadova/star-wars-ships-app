@@ -9,7 +9,8 @@ const RenderSingularStarship = () => {
     const starships = useSelector((state) => state.starships.starships);
     
     const starshipToRender = starships.find((ship) => ship.name === selectedStarship.shipName);
-    const starshipId = (starshipToRender.url).slice(-2, -1);
+    const re = /\d+/g;
+    const starshipId = JSON.stringify(starshipToRender.url).match(re);
 
     return (
         <ShipsContainer>

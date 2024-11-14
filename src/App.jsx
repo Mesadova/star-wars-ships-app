@@ -55,6 +55,7 @@ export const ShipsContainer = styled.div`
 `
 
 const App = () => {
+  /*
   const [shipCollection, setShipCollection] = useState([])
 
   useEffect(() => {
@@ -64,7 +65,7 @@ const App = () => {
     .then(response => {
       console.log(response.data.results)
       setShipCollection(response.data.results)})  
-    }, [])
+    }, [])*/
 
   return (
     <div>
