@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 
-const ShipCard = styled.div`
+export const ShipCard = styled.div`
     display: box;
     background-color: #1c1c1c;
     color: #a7a4a4;
@@ -13,17 +13,21 @@ const ShipCard = styled.div`
     cursor: pointer;
 `
 
-const ShipCardInfo = styled.p`
-    display: block;
-    height: 100%;
-    width: 100%;
-    color: #a7a4a4;
-    justify-content: start;
-    margin: 0;
+export const ShipCardInfo = styled.p.attrs(props => ({
+    type: "text",
+    $size: props.$size || '15px',
+    $colorText: props.$colorText || '#a7a4a4',
+  }))`
+    
+    font-size: ${props => props.$size};
+    align: 'left';
+    color: ${props => props.$colorText};
+    margin-top: 0.5em ;
+    margin-bottom: 0.5em ;
+    margin-right: 0.5em;
 `
 
 const ShipCollection = ({shipName, shipModel, index }) => {
-
     const navigate = useNavigate();
     const handleClick = (e, index, shipName) => {
         navigate(`${shipName}`);

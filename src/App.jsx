@@ -1,5 +1,3 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
 import { styled, createGlobalStyle  } from 'styled-components'
 import { Tab, Tabs } from 'react-bootstrap'
 import RenderShipCard from './components/ShipCollection'
@@ -55,17 +53,7 @@ export const ShipsContainer = styled.div`
 `
 
 const App = () => {
-  /*
-  const [shipCollection, setShipCollection] = useState([])
-
-  useEffect(() => {
-    console.log('effect')    
-    axios      
-    .get('https://swapi.dev/api/starships')      
-    .then(response => {
-      console.log(response.data.results)
-      setShipCollection(response.data.results)})  
-    }, [])*/
+  
 
   return (
     <div>
