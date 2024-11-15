@@ -15,8 +15,8 @@ const RenderShipCollection = () => {
   const hasMore = useSelector((state) => state.starships.hasMore);
   const loading = useSelector((state) => state.starships.loading);
 
-  const observer = useRef;
-  const lastShipRef = useCallback(node => {
+  const observer = useRef()
+  const lastShipElementRef = useCallback(node => {
     if (loading) return
     if (observer.current) observer.current.disconnect()
     observer.current = new IntersectionObserver(entries => {
@@ -31,7 +31,12 @@ const RenderShipCollection = () => {
     <ShipsContainer>
       {starships.map((element, index) => {
         if (starships.length === index + 1) {
-          return <ShipCollection ref={lastShipRef} key={index} index={index} shipName={element.name} shipModel={element.model} />
+          console.log(element.name)
+          return (
+            <div ref={lastShipElementRef} key={index}>
+              <ShipCollection key={index} index={index} shipName={element.name} shipModel={element.model} />
+            </div>
+          )
         } else {
           return <ShipCollection key={index} index={index} shipName={element.name} shipModel={element.model} />
         }
