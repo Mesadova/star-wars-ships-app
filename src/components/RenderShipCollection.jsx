@@ -1,7 +1,9 @@
 import { styled } from 'styled-components'
 import ShipCollection from './ShipCollection'
-import { useSelector } from 'react-redux'
-import { useCallback, useRef } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useCallback, useRef, useState, useEffect } from 'react'
+import { fetchStarships } from '../store/starshipsSlice.js'
+import { selectStarships, selectHasMore, selectLoading, reset } from '../store/starshipsSlice.js'
 
 export const ShipsContainer = styled.div`
   align-items: center;
@@ -11,9 +13,18 @@ export const ShipsContainer = styled.div`
 `
 
 const RenderShipCollection = () => {
-  const starships = useSelector((state) => state.starships.starships);
-  const hasMore = useSelector((state) => state.starships.hasMore);
-  const loading = useSelector((state) => state.starships.loading);
+  const [pageNumber, setPageNumber] = useState(1)
+
+  const starships = useSelector(selectStarships);
+  const hasMore = useSelector(selectHasMore);
+  const loading = useSelector(selectLoading);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(reset())
+    dispatch(fetchStarships(pageNumber));
+  }, []);
+
 
   const observer = useRef()
   const lastShipElementRef = useCallback(node => {
@@ -21,7 +32,9 @@ const RenderShipCollection = () => {
     if (observer.current) observer.current.disconnect()
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && hasMore) {
-        console.log('Visible')
+        const newPageNumber = pageNumber + 1
+        setPageNumber(newPageNumber)
+        dispatch(fetchStarships(newPageNumber));
       }
     })
     if (node) observer.current.observe(node)
@@ -31,16 +44,12 @@ const RenderShipCollection = () => {
     <ShipsContainer>
       {starships.map((element, index) => {
         if (starships.length === index + 1) {
-          console.log(element.name)
-          return (
-            <div ref={lastShipElementRef} key={index}>
-              <ShipCollection key={index} index={index} shipName={element.name} shipModel={element.model} />
-            </div>
-          )
+          return <ShipCollection key={index} index={index} shipName={element.name} shipModel={element.model} ref={lastShipElementRef}/>
         } else {
           return <ShipCollection key={index} index={index} shipName={element.name} shipModel={element.model} />
         }
       })}
+      <div>{loading && 'Loading...'}</div>
     </ShipsContainer>
   )
 }

@@ -4,24 +4,29 @@ import axios from 'axios'
 
 export const fetchStarships = createAsyncThunk(
     'starships/fetchStarships',
-    async (arg, { getState }) => {
-        const state = getState();
-        const response = await axios.get(`https://swapi.dev/api/starships/?page=${state.starships.page}`);
+    async (pageNumber) => {
+        const response = await axios.get(`https://swapi.dev/api/starships/?page=${pageNumber}`);
         return response.data.results;
     }
 );
 
-const starshipsSlice = createSlice({
+export const starshipsSlice = createSlice({
     name: 'starships',
     initialState: {
         starships: [],
         status: 'idle',
-        page: 1,
         error: null,
         loading: true,
         hasMore: true,
     },
-    reducers: {},
+    reducers: {
+        reset: state => {
+            state.starships = []
+        },
+        setPageNumber: (state, action) => {
+            state.value += action.payload
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchStarships.pending, (state) => {
@@ -42,3 +47,9 @@ const starshipsSlice = createSlice({
 });
 
 export default starshipsSlice.reducer;
+
+export const { reset } = starshipsSlice.actions
+
+export const selectStarships = (state) => state.starships.starships
+export const selectHasMore = (state) => state.starships.hasMore
+export const selectLoading = (state) => state.starships.loading

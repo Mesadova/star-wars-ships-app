@@ -4,7 +4,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import RenderSingularStarship from './RenderSingularStarship.jsx'
 import RenderShipCollection from './RenderShipCollection'
 import { useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { fetchStarships } from '../store/starshipsSlice.js'
 
 export const GlobalStyle = createGlobalStyle`
@@ -57,12 +57,6 @@ export const TabsWrapper = styled.div.attrs(props => ({
 `
 
 const MainPageNav = () => {
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchStarships());
-  }, []);
 
   const navigate = useNavigate();
   const handleSelect = (eventKey) => {
