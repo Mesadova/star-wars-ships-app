@@ -8,6 +8,7 @@ const RenderSingularStarship = () => {
     const selectedStarship = useParams();
     const starshipsCollection = useSelector(selectStarshipsCollection);
     
+    
     const starshipToRender = starshipsCollection.find((ship) => ship.name === selectedStarship.shipName);
     const dispatch = useDispatch();
     dispatch(setStarshipToShow(starshipToRender))

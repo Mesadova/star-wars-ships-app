@@ -20,11 +20,11 @@ const RenderShipCollection = () => {
   const loading = useSelector(selectLoading);
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(reset())
     dispatch(fetchStarships(pageNumber));
   }, []);
-
 
   const observer = useRef()
   const lastShipElementRef = useCallback(node => {

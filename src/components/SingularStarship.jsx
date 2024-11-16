@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { ShipCardInfo } from "./ShipCollection";
 import { starshipToShow } from "../store/starshipsSlice";
 import { useSelector } from "react-redux";
+import { RenderPilots } from "./RenderPilots";
+import { Films } from "./Films";
 
 export const StarshipCard = styled.div`
   border: solid;
@@ -74,9 +76,11 @@ const SingularStarship = ({ starshipId }) => {
       <StarshipBanner>
         <ShipCardInfo $size='20px' $align='left' $colorText='white'>PILOTS</ShipCardInfo>
       </StarshipBanner>
+      <RenderPilots />
       <StarshipBanner>
         <ShipCardInfo $size='20px' $align='left' $colorText='white'>FILMS</ShipCardInfo>
       </StarshipBanner>
+      <Films />
     </>
   )
 }
