@@ -1,20 +1,23 @@
 import SingularStarship from './SingularStarship';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ShipsContainer } from './RenderShipCollection';
 import { useParams } from 'react-router-dom';
-import { selectStarships } from '../store/starshipsSlice';
+import { selectStarshipsCollection, setStarshipToShow } from '../store/starshipsSlice.js'
 
 const RenderSingularStarship = () => {
     const selectedStarship = useParams();
-    const starships = useSelector(selectStarships);
+    const starshipsCollection = useSelector(selectStarshipsCollection);
     
-    const starshipToRender = starships.find((ship) => ship.name === selectedStarship.shipName);
+    const starshipToRender = starshipsCollection.find((ship) => ship.name === selectedStarship.shipName);
+    const dispatch = useDispatch();
+    dispatch(setStarshipToShow(starshipToRender))
+
     const re = /\d+/g;
     const starshipId = JSON.stringify(starshipToRender.url).match(re);
 
     return (
         <ShipsContainer>
-                <SingularStarship starshipToRender={starshipToRender} starshipId={starshipId} />
+            <SingularStarship starshipId={starshipId} />
         </ShipsContainer>
     )
 }

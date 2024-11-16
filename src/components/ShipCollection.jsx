@@ -29,12 +29,12 @@ export const ShipCardInfo = styled.p.attrs(props => ({
 
 const ShipCollection = forwardRef(({ shipName, shipModel, index }, ref) => {
     const navigate = useNavigate();
-    const handleClick = (e, index, shipName) => {
+    const handleClick = (shipName) => {
         navigate(`${shipName}`);
     };
 
     return (
-        <ShipCard onClick={(e) => handleClick(e, index, shipName)} value={index} ref={ref}>
+        <ShipCard onClick={(e) => handleClick(shipName)} value={index} ref={ref}>
             <ShipCardInfo>{shipName.toUpperCase()}</ShipCardInfo>
             <ShipCardInfo>{shipModel}</ShipCardInfo>
         </ShipCard>

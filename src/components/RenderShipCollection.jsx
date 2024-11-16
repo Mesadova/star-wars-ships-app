@@ -3,7 +3,7 @@ import ShipCollection from './ShipCollection'
 import { useSelector, useDispatch } from 'react-redux'
 import { useCallback, useRef, useState, useEffect } from 'react'
 import { fetchStarships } from '../store/starshipsSlice.js'
-import { selectStarships, selectHasMore, selectLoading, reset } from '../store/starshipsSlice.js'
+import { selectStarshipsCollection, selectHasMore, selectLoading, reset } from '../store/starshipsSlice.js'
 
 export const ShipsContainer = styled.div`
   align-items: center;
@@ -15,7 +15,7 @@ export const ShipsContainer = styled.div`
 const RenderShipCollection = () => {
   const [pageNumber, setPageNumber] = useState(1)
 
-  const starships = useSelector(selectStarships);
+  const starshipsCollection = useSelector(selectStarshipsCollection);
   const hasMore = useSelector(selectHasMore);
   const loading = useSelector(selectLoading);
 
@@ -42,8 +42,8 @@ const RenderShipCollection = () => {
 
   return (
     <ShipsContainer>
-      {starships.map((element, index) => {
-        if (starships.length === index + 1) {
+      {starshipsCollection.map((element, index) => {
+        if (starshipsCollection.length === index + 1) {
           return <ShipCollection key={index} index={index} shipName={element.name} shipModel={element.model} ref={lastShipElementRef}/>
         } else {
           return <ShipCollection key={index} index={index} shipName={element.name} shipModel={element.model} />

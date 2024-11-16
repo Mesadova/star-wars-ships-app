@@ -3,9 +3,6 @@ import { Tab, Tabs } from 'react-bootstrap'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import RenderSingularStarship from './RenderSingularStarship.jsx'
 import RenderShipCollection from './RenderShipCollection'
-import { useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import { fetchStarships } from '../store/starshipsSlice.js'
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -57,11 +54,10 @@ export const TabsWrapper = styled.div.attrs(props => ({
 `
 
 const MainPageNav = () => {
-
   const navigate = useNavigate();
   const handleSelect = (eventKey) => {
     navigate(eventKey); 
-  };
+  }
 
   return (
     <>

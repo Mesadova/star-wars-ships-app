@@ -1,19 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios'
 
-
-export const fetchStarships = createAsyncThunk(
-    'starships/fetchStarships',
-    async (pageNumber) => {
-        const response = await axios.get(`https://swapi.dev/api/starships/?page=${pageNumber}`);
-        return response.data.results;
-    }
-);
-
 export const starshipsSlice = createSlice({
     name: 'starships',
     initialState: {
-        starships: [],
+        starshipCollection: [],
+        starshipToShow: {},
         status: 'idle',
         error: null,
         loading: true,
@@ -21,11 +13,11 @@ export const starshipsSlice = createSlice({
     },
     reducers: {
         reset: state => {
-            state.starships = []
+            state.starshipCollection = []
         },
-        setPageNumber: (state, action) => {
-            state.value += action.payload
-        },
+        setStarshipToShow: (state, action) => {
+            state.starshipToShow = action.payload
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -35,7 +27,7 @@ export const starshipsSlice = createSlice({
             })
             .addCase(fetchStarships.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.starships = state.starships.concat(action.payload)
+                state.starshipCollection = state.starshipCollection.concat(action.payload)
                 state.loading = false;
                 state.hasMore = (action.payload.length > 0)
             })
@@ -46,10 +38,21 @@ export const starshipsSlice = createSlice({
     }
 });
 
+export const fetchStarships = createAsyncThunk(
+    'starships/fetchStarships',
+    async (pageNumber) => {
+        const response = await axios.get(`https://swapi.dev/api/starships/?page=${pageNumber}`);
+        return response.data.results;
+    }
+);
+
 export default starshipsSlice.reducer;
 
-export const { reset } = starshipsSlice.actions
+//--- Actions
+export const { reset, setStarshipToShow } = starshipsSlice.actions
 
-export const selectStarships = (state) => state.starships.starships
+//--- Selectors
+export const selectStarshipsCollection = (state) => state.starships.starshipCollection
 export const selectHasMore = (state) => state.starships.hasMore
 export const selectLoading = (state) => state.starships.loading
+export const starshipToShow = (state) => state.starships.starshipToShow

@@ -1,6 +1,8 @@
 import { Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import { ShipCardInfo } from "./ShipCollection";
+import { starshipToShow } from "../store/starshipsSlice";
+import { useSelector } from "react-redux";
 
 export const StarshipCard = styled.div`
   border: solid;
@@ -9,13 +11,13 @@ export const StarshipCard = styled.div`
   background-color: #212529;
   border-radius: 10px;
   color: #a1a09c;
-  width: 160vh;
+  width: 180vh;
   font-size: 16px;
   padding: 20px;
 `
 
 export const StarshipBanner = styled.div`
-  width: 160vh;
+  width: 180vh;
   border: solid;
   border-color: #a7a4a4;
   border-width: 2px 0 2px 0;
@@ -25,8 +27,8 @@ export const StarshipBanner = styled.div`
   padding-left: 10px;
 `
 
-const SingularStarship = ({ starshipToRender, starshipId }) => {
-  console.log(starshipId)
+const SingularStarship = ({ starshipId }) => {
+  const starshipsToShow = useSelector(starshipToShow);
 
   const numberWithCommas = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -52,23 +54,29 @@ const SingularStarship = ({ starshipToRender, starshipId }) => {
             />
           </Col>
           <Col>
-            <ShipCardInfo $size='20px' $colorText='white' ><strong>{starshipToRender.name.toUpperCase()}</strong></ShipCardInfo>
+            <ShipCardInfo $size='20px' $colorText='white' ><strong>{starshipsToShow.name.toUpperCase()}</strong></ShipCardInfo>
             <ShipCardInfo>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis maximus aliquet scelerisque. Duis magna nisi, egestas in nibh at, tristique condimentum sem.</ShipCardInfo>
             <Row>
               <Col>
-                <ShipCardInfo><strong>{`Model: `}</strong>{`${starshipToRender.model}`}</ShipCardInfo>
-                <ShipCardInfo><strong>{`Cost: `}</strong>{numberWithCommas(starshipToRender.cost_in_credits)} {`credits`}</ShipCardInfo>
-                <ShipCardInfo><strong>{`Atmospheric speed: `}</strong>{`${starshipToRender.max_atmosphering_speed} km/h`}</ShipCardInfo>
+                <ShipCardInfo><strong>{`Model: `}</strong>{`${starshipsToShow.model}`}</ShipCardInfo>
+                <ShipCardInfo><strong>{`Cost: `}</strong>{numberWithCommas(starshipsToShow.cost_in_credits)} {`credits`}</ShipCardInfo>
+                <ShipCardInfo><strong>{`Atmospheric speed: `}</strong>{`${starshipsToShow.max_atmosphering_speed} km/h`}</ShipCardInfo>
               </Col>
               <Col>
-                <ShipCardInfo><strong>{`Manufacturer: `}</strong>{`${starshipToRender.manufacturer}`}</ShipCardInfo>
-                <ShipCardInfo><strong>{`Length: `}</strong>{`${starshipToRender.length} m`}</ShipCardInfo>
-                <ShipCardInfo><strong>{`Crew: `}</strong>{`${starshipToRender.crew}`}</ShipCardInfo>
+                <ShipCardInfo><strong>{`Manufacturer: `}</strong>{`${starshipsToShow.manufacturer}`}</ShipCardInfo>
+                <ShipCardInfo><strong>{`Length: `}</strong>{`${starshipsToShow.length} m`}</ShipCardInfo>
+                <ShipCardInfo><strong>{`Crew: `}</strong>{`${starshipsToShow.crew}`}</ShipCardInfo>
               </Col>
             </Row>
           </Col>
         </Row>
       </StarshipCard>
+      <StarshipBanner>
+        <ShipCardInfo $size='20px' $align='left' $colorText='white'>PILOTS</ShipCardInfo>
+      </StarshipBanner>
+      <StarshipBanner>
+        <ShipCardInfo $size='20px' $align='left' $colorText='white'>FILMS</ShipCardInfo>
+      </StarshipBanner>
     </>
   )
 }
