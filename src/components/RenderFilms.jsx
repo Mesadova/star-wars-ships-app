@@ -36,8 +36,9 @@ export const RenderFilms = () => {
     return(
         <ShipsContainer $direction='row' $alignment='start' style={{maxWidth: '180vh', minWidth: '180vh'}}>
             {filmsNumbersToShow.map((element, index) => {
+                console.log(index)
                 return(
-                    <StarshipCard className="pilots" key={index} style={{flexGrow: '1', justifyText: 'center'}}>
+                    <StarshipCard className="pilots" key={index} style={{justifyText: 'center'}}>
                         <Row key={index}>
                             <Col>
                                 <img id="pilotImage"
@@ -49,7 +50,12 @@ export const RenderFilms = () => {
                         </Row>
                         <Row >
                             <Col>
-                                <ShipCardInfo $alignment='center' >{filmsNamesToShow[index]}</ShipCardInfo>
+                            {filmsNamesToShow[index] && (
+                                <>
+                                    <ShipCardInfo $alignment='center'>{(filmsNamesToShow[index].title).toUpperCase()}</ShipCardInfo>
+                                    <ShipCardInfo $alignment='center'>Episode {filmsNamesToShow[index].episode_id}</ShipCardInfo>
+                                </>
+                            )}
                             </Col>
                         </Row>
                     </StarshipCard>

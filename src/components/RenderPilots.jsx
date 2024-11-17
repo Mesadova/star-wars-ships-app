@@ -37,7 +37,7 @@ export const RenderPilots = () => {
         <ShipsContainer $direction='row' $alignment='start' style={{maxWidth: '180vh', minWidth: '180vh'}}>
             {pilotsNumbersToShow.map((element, index) => {
                 return(
-                    <StarshipCard className="pilots" key={index} style={{flexGrow: '1', justifyText: 'center'}}>
+                    <StarshipCard className="pilots" key={index} style={{justifyText: 'center'}}>
                         <Row key={index}>
                             <Col>
                                 <img id="pilotImage"

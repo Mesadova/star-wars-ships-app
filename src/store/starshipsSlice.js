@@ -21,7 +21,8 @@ export const starshipsSlice = createSlice({
             state.pilotsNames = [],
             state.pilotsNumbers = [],
             state.filmsNames = [],
-            state.filmsNumbers = []
+            state.filmsNumbers = [],
+            state.starshipToShow = {}
         },
         setStarshipToShow: (state, action) => {
             state.starshipToShow = action.payload
@@ -82,7 +83,7 @@ export const fetchFilmsNames = createAsyncThunk(
     'starships/fetchFilms',
     async (filmNumber) => {
         const response = await axios.get(`https://swapi.dev/api/films/${filmNumber}/`);
-        return response.data.title.toUpperCase();
+        return {title: response.data.title, episode_id: response.data.episode_id };
     }
 );
 

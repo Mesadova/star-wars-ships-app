@@ -20,7 +20,8 @@ export const StarshipCard = styled.div`
   overflow: hidden;
 
   &.pilots {
-    width: 30vh;
+    width: 40vh;
+    align-items: center;
   }
 `
 
@@ -36,12 +37,11 @@ export const StarshipBanner = styled.div`
 `
 
 const SingularStarship = ({ starshipId }) => {
-  
+
   const starshipsToShow = useSelector(selectStarshipToShow);
   if (!starshipsToShow || !starshipsToShow.name) {
     return <div>Loading...</div>; // or handle the loading state appropriately
   }
-  
 
   const numberWithCommas = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
