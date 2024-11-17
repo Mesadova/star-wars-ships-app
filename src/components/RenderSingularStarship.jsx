@@ -1,24 +1,39 @@
-import SingularStarship from './SingularStarship';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ShipsContainer } from './RenderShipCollection';
 import { useParams } from 'react-router-dom';
+import { ShipsContainer } from './RenderShipCollection';
+import SingularStarship from './SingularStarship';
 import { selectStarshipsCollection, setStarshipToShow } from '../store/starshipsSlice.js'
 
 const RenderSingularStarship = () => {
-    const selectedStarship = useParams();
-    const starshipsCollection = useSelector(selectStarshipsCollection);
-    
-    
-    const starshipToRender = starshipsCollection.find((ship) => ship.name === selectedStarship.shipName);
     const dispatch = useDispatch();
-    dispatch(setStarshipToShow(starshipToRender))
+    const { shipName } = useParams();
+
+    const starshipsCollection = useSelector(selectStarshipsCollection);
+    console.log('Starships Collection:', starshipsCollection);
+    
+    const starshipToRender = starshipsCollection.find((ship) => ship.name === shipName);
+    console.log('Starship to Render:', starshipToRender);
+    
+    useEffect(() => {
+        if (starshipToRender) {
+            dispatch(setStarshipToShow(starshipToRender));
+            console.log('Starship set to show:', starshipToRender);
+        } else {
+            console.warn('Starship to render is undefined');
+        }
+    }, [dispatch, starshipToRender]);
 
     const re = /\d+/g;
-    const starshipId = JSON.stringify(starshipToRender.url).match(re);
+    const starshipId = JSON.stringify(starshipToRender?.url).match(re);
 
     return (
         <ShipsContainer>
-            <SingularStarship starshipId={starshipId} />
+            {starshipToRender ? (
+                <SingularStarship starshipId={starshipId} />
+            ) : (
+                <p>Starship not found</p>
+            )}
         </ShipsContainer>
     )
 }

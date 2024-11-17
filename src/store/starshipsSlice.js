@@ -5,8 +5,10 @@ export const starshipsSlice = createSlice({
     name: 'starships',
     initialState: {
         starshipCollection: [],
-        peopleToShow: [],
+        pilotsNames: [],
         pilotsNumbers: [],
+        filmsNames: [],
+        filmsNumbers: [],
         starshipToShow: {},
         status: 'idle',
         error: null,
@@ -16,20 +18,30 @@ export const starshipsSlice = createSlice({
     reducers: {
         reset: state => {
             state.starshipCollection = [],
-            state.peopleToShow = []
+            state.pilotsNames = [],
+            state.pilotsNumbers = [],
+            state.filmsNames = [],
+            state.filmsNumbers = []
         },
         setStarshipToShow: (state, action) => {
             state.starshipToShow = action.payload
         },
         setPilotsNumbers: (state, action) => {
             state.pilotsNumbers = state.pilotsNumbers.concat(action.payload)
+        },
+        setFilmsNumbers: (state, action) => {
+            state.filmsNumbers = state.filmsNumbers.concat(action.payload)
         }
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchStarships.pending || fetchPeople.rejected, (state) => {
+            .addCase(fetchStarships.pending || fetchPilotsNames.pending || fetchFilmsNames.pending, (state) => {
                 state.status = 'loading';
                 state.loading = true;
+            })
+            .addCase(fetchStarships.rejected || fetchPilotsNames.rejected || fetchFilmsNames.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
             })
             .addCase(fetchStarships.fulfilled, (state, action) => {
                 state.status = 'succeeded';
@@ -37,13 +49,15 @@ export const starshipsSlice = createSlice({
                 state.loading = false;
                 state.hasMore = (action.payload.length > 0)
             })
-            .addCase(fetchStarships.rejected || fetchPeople.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message;
-            })
-            .addCase(fetchPeople.fulfilled, (state, action) => {
+            .addCase(fetchPilotsNames.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.peopleToShow = state.peopleToShow.concat(action.payload)
+                state.pilotsNames = state.pilotsNames.concat(action.payload)
+                state.loading = false;
+            })
+            .addCase(fetchFilmsNames.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.filmsNames = state.filmsNames.concat(action.payload)
+                state.loading = false;
             })
     }
 });
@@ -56,23 +70,33 @@ export const fetchStarships = createAsyncThunk(
     }
 );
 
-export const fetchPeople = createAsyncThunk(
+export const fetchPilotsNames = createAsyncThunk(
     'starships/fetchPeople',
     async (peopleNumber) => {
         const response = await axios.get(`https://swapi.dev/api/people/${peopleNumber}/`);
-        return response.data.name;
+        return response.data.name.toUpperCase();
+    }
+);
+
+export const fetchFilmsNames = createAsyncThunk(
+    'starships/fetchFilms',
+    async (filmNumber) => {
+        const response = await axios.get(`https://swapi.dev/api/films/${filmNumber}/`);
+        return response.data.title.toUpperCase();
     }
 );
 
 export default starshipsSlice.reducer;
 
 //--- Actions
-export const { reset, setStarshipToShow, setPilotsNumbers } = starshipsSlice.actions
+export const { reset, setStarshipToShow, setPilotsNumbers, setFilmsNumbers } = starshipsSlice.actions
 
 //--- Selectors
 export const selectStarshipsCollection = (state) => state.starships.starshipCollection
 export const selectHasMore = (state) => state.starships.hasMore
 export const selectLoading = (state) => state.starships.loading
-export const starshipToShow = (state) => state.starships.starshipToShow
-export const peopleToShow = (state) => state.starships.peopleToShow
+export const selectStarshipToShow = (state) => state.starships.starshipToShow
+export const selectPilotsNames = (state) => state.starships.pilotsNames
 export const selectPilotsNumbers = (state) => state.starships.pilotsNumbers
+export const selectFilmsNames = (state) => state.starships.filmsNames
+export const selectFilmsNumbers = (state) => state.starships.filmsNumbers

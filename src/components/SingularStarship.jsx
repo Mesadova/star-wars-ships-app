@@ -1,10 +1,10 @@
 import { Row, Col } from "react-bootstrap";
 import styled from "styled-components";
 import { ShipCardInfo } from "./ShipCollection";
-import { starshipToShow } from "../store/starshipsSlice";
+import { selectStarshipToShow } from "../store/starshipsSlice";
 import { useSelector } from "react-redux";
 import { RenderPilots } from "./RenderPilots";
-import { Films } from "./Films";
+import { RenderFilms } from "./RenderFilms";
 
 export const StarshipCard = styled.div`
   border: solid;
@@ -15,7 +15,13 @@ export const StarshipCard = styled.div`
   color: #a1a09c;
   width: 180vh;
   font-size: 16px;
-  padding: 20px;
+  margins: 0px;
+  padding: 0px;
+  overflow: hidden;
+
+  &.pilots {
+    width: 30vh;
+  }
 `
 
 export const StarshipBanner = styled.div`
@@ -30,7 +36,12 @@ export const StarshipBanner = styled.div`
 `
 
 const SingularStarship = ({ starshipId }) => {
-  const starshipsToShow = useSelector(starshipToShow);
+  
+  const starshipsToShow = useSelector(selectStarshipToShow);
+  if (!starshipsToShow || !starshipsToShow.name) {
+    return <div>Loading...</div>; // or handle the loading state appropriately
+  }
+  
 
   const numberWithCommas = (number) => {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -80,7 +91,7 @@ const SingularStarship = ({ starshipId }) => {
       <StarshipBanner>
         <ShipCardInfo $size='20px' $align='left' $colorText='white'>FILMS</ShipCardInfo>
       </StarshipBanner>
-      <Films />
+      <RenderFilms />
     </>
   )
 }

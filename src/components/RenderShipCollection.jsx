@@ -5,10 +5,13 @@ import { useCallback, useRef, useState, useEffect } from 'react'
 import { fetchStarships } from '../store/starshipsSlice.js'
 import { selectStarshipsCollection, selectHasMore, selectLoading, reset } from '../store/starshipsSlice.js'
 
-export const ShipsContainer = styled.div`
-  align-items: center;
+export const ShipsContainer = styled.div.attrs(props => ({
+  $direction: props.$direction || 'column',
+  $alignment: props.$alignment || 'center',
+}))`
   display: flex;
-  flex-direction: column;
+  align-items: ${props => props.$alignment};
+  flex-direction: ${props => props.$direction};
   gap: 25px;
 `
 

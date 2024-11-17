@@ -18,9 +18,10 @@ export const ShipCardInfo = styled.p.attrs(props => ({
     type: "text",
     $size: props.$size || '15px',
     $colorText: props.$colorText || '#a7a4a4',
+    $alignment: props.$alignment || 'left',
 }))`
     font-size: ${props => props.$size};
-    align: left;
+    text-align: ${props => props.$alignment};
     color: ${props => props.$colorText};
     margin-top: 0.5em;
     margin-bottom: 0.5em;
