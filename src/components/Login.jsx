@@ -2,6 +2,20 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GlobalStyle } from "../App";
+import { StarshipButton } from "./MainBanner";
+import { ShipCardInfo } from "./ShipCollection";
+import styled from "styled-components";
+
+export const FormWrapper = styled.div`
+    display: flex;
+    gap: 10px;
+    padding: 5px;
+    align-items: center;
+`
+
+export const StyledInput = styled.input`
+    border-radius: 10px;
+`
 
 export const Login = () => {
     const [email, setEmail] = useState("");
@@ -17,35 +31,48 @@ export const Login = () => {
         })
         .then((response) => {
             localStorage.setItem("token", response.data.token);
-            navigate("/");
+            navigate("/starships");
         })
         .catch((error) => {
             setError(error);
         })
     };
 
+    const backHome = () => {
+        navigate("/home")
+    }
+
     return (
-        <div>
-            <GlobalStyle />
-            <h1>Login</h1>
-            <p>email:"eve.holt@reqres.in"</p>
-            <p>password:"cityslicka"</p>
-            <form onSubmit={handleLogin}>
-                <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Login</button>
-            </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+        <div style={{padding: '30px'}}>
+            <div>
+                <GlobalStyle />
+                <FormWrapper>
+                    <ShipCardInfo $size='35px' $colorText='yellow' >Login</ShipCardInfo>
+                    <ShipCardInfo>( email: "eve.holt@reqres.in" )</ShipCardInfo>
+                    <ShipCardInfo>( password: "cityslicka" )</ShipCardInfo>
+                </FormWrapper>
+                <form onSubmit={handleLogin}>
+                    <FormWrapper>
+                        <StyledInput
+                            type="email"
+                            placeholder="Email..."
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <StyledInput
+                            type="password"
+                            placeholder="Password..."
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <StarshipButton type="submit">Login</StarshipButton>
+                    </FormWrapper>
+                </form>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+            </div>
+            <FormWrapper>
+                <StarshipButton onClick={backHome} >Home</StarshipButton>
+            </FormWrapper>
         </div>
     );
 }

@@ -6,7 +6,6 @@ import { StarshipCard } from "./SingularStarship";
 import { ShipsContainer } from "./RenderShipCollection";
 import { ShipCardInfo } from "./ShipCollection";
 
-
 export const RenderPilots = () => {
     const dispatch = useDispatch();
 

@@ -1,5 +1,8 @@
 
 import { useNavigate } from "react-router-dom";
+import { StarshipButton } from "./MainBanner";
+import { ShipCardInfo } from "./ShipCollection";
+import { ShipsContainer } from "./RenderShipCollection";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -12,14 +15,17 @@ const Home = () => {
   const isAuthenticated = !!localStorage.getItem("token");
 
   return (
-    <div>
-      <h1>Benvingut a l'aplicació!</h1>
+    <ShipsContainer>
+      <ShipCardInfo $size='35px' $colorText='yellow'>Welcome to the Star Wars ship catalog</ShipCardInfo>
       {isAuthenticated ? (
-        <button onClick={handleLogout}>Logout</button>
+        <StarshipButton onClick={handleLogout}>Logout</StarshipButton>
       ) : (
-        <p>No estàs logat. <a href="/login">Login</a></p>
+        <ShipsContainer>
+          <p>Login required to access the catalog</p>
+          <a style={{color: 'white'}} href="/login">LOGIN</a>
+        </ShipsContainer>
       )}
-    </div>
+    </ShipsContainer>
   );
 };
 

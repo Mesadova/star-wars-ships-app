@@ -2,6 +2,9 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GlobalStyle } from "../App";
+import { StarshipButton } from "./MainBanner";
+import { FormWrapper, StyledInput } from "./Login";
+import { ShipCardInfo } from "./ShipCollection";
 
 export const Register = () => {
     const [email, setEmail] = useState("");
@@ -25,26 +28,39 @@ export const Register = () => {
         })
     };
 
+    const backHome = () => {
+        navigate("/home")
+    }
+
     return (
-        <div>
-            <GlobalStyle />
-            <h1>Registre</h1>
-            <form onSubmit={handleRegister}>
-                <input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                />
-                <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="submit">Registra't</button>
-            </form>
-            {error && <p style={{ color: "red" }}>{error}</p>}
+        <div style={{padding: '30px'}}>
+            <div>
+                <GlobalStyle />
+                <FormWrapper>
+                    <ShipCardInfo $size='35px' $colorText='yellow' >Register</ShipCardInfo>
+                </FormWrapper>
+                <form onSubmit={handleRegister}>
+                    <FormWrapper>
+                        <StyledInput
+                        type="email"
+                        placeholder="Email..."
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        />
+                        <StyledInput
+                        type="password"
+                        placeholder="Password..."
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        />
+                        <StarshipButton type="submit">Submit</StarshipButton>
+                    </FormWrapper>
+                </form>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+            </div>
+            <FormWrapper>
+                <StarshipButton onClick={backHome} >Home</StarshipButton>
+            </FormWrapper>
         </div>
     )
 }

@@ -1,10 +1,12 @@
 import { styled } from 'styled-components'
 import { Tab, Tabs } from 'react-bootstrap'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
 import RenderSingularStarship from './RenderSingularStarship.jsx'
 import RenderShipCollection from './RenderShipCollection'
 import { ProtectedRoute } from './ProtectedRoute.jsx'
 import { MainBanner } from './MainBanner.jsx'
+import Home from './Home.jsx'
+import { useState, useEffect } from 'react'
 
 export const TabsWrapper = styled.div.attrs(props => ({
   $divWidth: props.$divWidth || 'auto',
@@ -42,9 +44,18 @@ export const TabsWrapper = styled.div.attrs(props => ({
 
 const MainPageNav = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [activeKey, setActiveKey] = useState(location.pathname);
+
+  useEffect(() => {
+    setActiveKey(location.pathname);
+  }, [location]);
+
+  
   const isAuthenticated = !!localStorage.getItem("token");
 
   const handleSelect = (eventKey) => {
+    setActiveKey(eventKey)
     navigate(eventKey); 
   }
 
@@ -52,13 +63,13 @@ const MainPageNav = () => {
     <>
       <MainBanner />
       <TabsWrapper>
-        <Tabs id="main-menu-tabs" onSelect={handleSelect} >
+        <Tabs id="main-menu-tabs" activeKey={activeKey} onSelect={handleSelect} >
           <Tab eventKey="/home" title="HOME">
             <Routes>
-              <Route path='/home' element={<p>TEST</p>} />
+              <Route path='/home' element={<Home />} />
             </Routes>
           </Tab>
-          <Tab eventKey="/starships" title="STARSHIPS">
+          <Tab eventKey="/starships" title="STARSHIPS" className={'tab'}>
             <Routes>
               <Route element={<ProtectedRoute canActivate={isAuthenticated} />}>
                 <Route path='/starships'>
