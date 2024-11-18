@@ -1,23 +1,10 @@
-import { styled, createGlobalStyle  } from 'styled-components'
+import { styled } from 'styled-components'
 import { Tab, Tabs } from 'react-bootstrap'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import RenderSingularStarship from './RenderSingularStarship.jsx'
 import RenderShipCollection from './RenderShipCollection'
-
-export const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    background-color: #0a0b0b;
-    color: #aaa;
-    letter-spacing: 0.15px;
-    font-weight: 500;
-    font-size: 22px;
-    font-family: "Michroma", sans-serif;
-  }
-  p {
-    font-family: "Michroma", sans-serif;
-  }
-`
+import { ProtectedRoute } from './ProtectedRoute.jsx'
+import { MainBanner } from './MainBanner.jsx'
 
 export const TabsWrapper = styled.div.attrs(props => ({
   $divWidth: props.$divWidth || 'auto',
@@ -55,18 +42,17 @@ export const TabsWrapper = styled.div.attrs(props => ({
 
 const MainPageNav = () => {
   const navigate = useNavigate();
+  const isAuthenticated = !!localStorage.getItem("token");
+
   const handleSelect = (eventKey) => {
     navigate(eventKey); 
   }
 
   return (
     <>
-      <GlobalStyle />
-      <div style={{display: 'flex', justifyContent: 'center', }}>
-        <img src="../public/assets/logo.png" style={{width: '15%', marginBottom: '40px', marginTop: '20px'}}></img>
-      </div>
+      <MainBanner />
       <TabsWrapper>
-        <Tabs defaultActiveKey="/home" id="main-menu-tabs" onSelect={handleSelect} >
+        <Tabs id="main-menu-tabs" onSelect={handleSelect} >
           <Tab eventKey="/home" title="HOME">
             <Routes>
               <Route path='/home' element={<p>TEST</p>} />
@@ -74,10 +60,12 @@ const MainPageNav = () => {
           </Tab>
           <Tab eventKey="/starships" title="STARSHIPS">
             <Routes>
+              <Route element={<ProtectedRoute canActivate={isAuthenticated} />}>
                 <Route path='/starships'>
                     <Route index element={<RenderShipCollection />} />
                     <Route path=':shipName' element={<RenderSingularStarship />} />
                 </Route>
+              </Route>
             </Routes>
           </Tab>
         </Tabs>

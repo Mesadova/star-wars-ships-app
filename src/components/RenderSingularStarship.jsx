@@ -10,15 +10,12 @@ const RenderSingularStarship = () => {
     const { shipName } = useParams();
 
     const starshipsCollection = useSelector(selectStarshipsCollection);
-    console.log('Starships Collection:', starshipsCollection);
     
     const starshipToRender = starshipsCollection.find((ship) => ship.name === shipName);
-    console.log('Starship to Render:', starshipToRender);
     
     useEffect(() => {
         if (starshipToRender) {
             dispatch(setStarshipToShow(starshipToRender));
-            console.log('Starship set to show:', starshipToRender);
         } else {
             console.warn('Starship to render is undefined');
         }

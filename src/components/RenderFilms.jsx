@@ -29,14 +29,12 @@ export const RenderFilms = () => {
         starshipsToShow.films.flatMap((element) => {
             dispatch(setFilmsNumbers(element.match(re)))
         });
-    }
-    , []);
+    }, []);
 
 
     return(
         <ShipsContainer $direction='row' $alignment='start' style={{maxWidth: '180vh', minWidth: '180vh'}}>
             {filmsNumbersToShow.map((element, index) => {
-                console.log(index)
                 return(
                     <StarshipCard className="pilots" key={index} style={{justifyText: 'center'}}>
                         <Row key={index}>
