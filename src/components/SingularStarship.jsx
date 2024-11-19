@@ -40,17 +40,18 @@ const SingularStarship = ({ starshipId }) => {
 
   const starshipsToShow = useSelector(selectStarshipToShow);
   if (!starshipsToShow || !starshipsToShow.name) {
-    return <div>Loading...</div>; // or handle the loading state appropriately
+    return <div>Loading...</div>;
   }
 
   const numberWithCommas = (number) => {
-    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   
   const handleImageError = () => {
     const img = document.getElementById('starshipImage');
-    img.src = `../public/assets/${starshipId}.jpg`
+    img.src = `../src/assets/${starshipId}.jpg`;
   }
+  
   
   return (
     <>

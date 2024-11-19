@@ -39,7 +39,7 @@ export const MainBanner = () => {
     return(
         <BannerWrapper>
                 <div style={{gridColumn: 2, textAlign: 'center', marginRight: '30px'}}>
-                    <img src="../public/assets/logo.png" style={{width: '80%', height: '80%', marginBottom: '40px', marginTop: '20px'}}></img>
+                    <img src="../src/assets/logo.png" style={{width: '80%', height: '80%', marginBottom: '40px', marginTop: '20px'}}></img>
                 </div>
                 <div style={{display: 'flex', flexDirection: 'row', alignContent: 'center', gap: '10px', marginTop: '80px', alignItems: 'center', gridColumn: 3 }}>
                     <StarshipButton onClick={handleLogin}>LOGIN</StarshipButton>

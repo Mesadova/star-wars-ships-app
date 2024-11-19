@@ -1,12 +1,10 @@
 import { styled } from 'styled-components'
 import { Tab, Tabs } from 'react-bootstrap'
-import { Route, Routes, useNavigate, useLocation } from 'react-router-dom'
-import RenderSingularStarship from './RenderSingularStarship.jsx'
-import RenderShipCollection from './RenderShipCollection'
-import { ProtectedRoute } from './ProtectedRoute.jsx'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { MainBanner } from './MainBanner.jsx'
-import Home from './Home.jsx'
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { selectActiveKey, setActiveKey } from '../store/starshipsSlice.js'
 
 export const TabsWrapper = styled.div.attrs(props => ({
   $divWidth: props.$divWidth || 'auto',
@@ -45,18 +43,18 @@ export const TabsWrapper = styled.div.attrs(props => ({
 const MainPageNav = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [activeKey, setActiveKey] = useState(location.pathname);
+  const activeKey = useSelector(selectActiveKey);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setActiveKey(location.pathname);
+    if (location.pathname === '/home' || location.pathname === '/starships') {
+      dispatch(setActiveKey(location.pathname));
+    }
   }, [location]);
-
   
-  const isAuthenticated = !!localStorage.getItem("token");
-
   const handleSelect = (eventKey) => {
-    setActiveKey(eventKey)
-    navigate(eventKey); 
+    dispatch(setActiveKey(eventKey))
+    navigate(eventKey);
   }
 
   return (
@@ -65,19 +63,9 @@ const MainPageNav = () => {
       <TabsWrapper>
         <Tabs id="main-menu-tabs" activeKey={activeKey} onSelect={handleSelect} >
           <Tab eventKey="/home" title="HOME">
-            <Routes>
-              <Route path='/home' element={<Home />} />
-            </Routes>
           </Tab>
           <Tab eventKey="/starships" title="STARSHIPS" className={'tab'}>
-            <Routes>
-              <Route element={<ProtectedRoute canActivate={isAuthenticated} />}>
-                <Route path='/starships'>
-                    <Route index element={<RenderShipCollection />} />
-                    <Route path=':shipName' element={<RenderSingularStarship />} />
-                </Route>
-              </Route>
-            </Routes>
+            
           </Tab>
         </Tabs>
       </TabsWrapper>

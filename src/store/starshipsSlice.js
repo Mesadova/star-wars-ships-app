@@ -10,6 +10,7 @@ export const starshipsSlice = createSlice({
         filmsNames: [],
         filmsNumbers: [],
         starshipToShow: {},
+        activeKey: '/home',
         status: 'idle',
         error: null,
         loading: true,
@@ -32,6 +33,9 @@ export const starshipsSlice = createSlice({
         },
         setFilmsNumbers: (state, action) => {
             state.filmsNumbers = state.filmsNumbers.concat(action.payload)
+        },
+        setActiveKey: (state, action) => {
+            state.activeKey = action.payload
         }
     },
     extraReducers: (builder) => {
@@ -90,7 +94,7 @@ export const fetchFilmsNames = createAsyncThunk(
 export default starshipsSlice.reducer;
 
 //--- Actions
-export const { reset, setStarshipToShow, setPilotsNumbers, setFilmsNumbers } = starshipsSlice.actions
+export const { reset, setStarshipToShow, setPilotsNumbers, setFilmsNumbers, setActiveKey } = starshipsSlice.actions
 
 //--- Selectors
 export const selectStarshipsCollection = (state) => state.starships.starshipCollection
@@ -101,3 +105,4 @@ export const selectPilotsNames = (state) => state.starships.pilotsNames
 export const selectPilotsNumbers = (state) => state.starships.pilotsNumbers
 export const selectFilmsNames = (state) => state.starships.filmsNames
 export const selectFilmsNumbers = (state) => state.starships.filmsNumbers
+export const selectActiveKey = (state) => state.starships.activeKey

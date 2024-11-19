@@ -9,7 +9,7 @@ const Home = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/login");
+    navigate("/home");
   };
 
   const isAuthenticated = !!localStorage.getItem("token");

@@ -3,14 +3,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { GlobalStyle } from "../App";
 import { StarshipButton } from "./MainBanner";
-import { FormWrapper, StyledInput } from "./Login";
 import { ShipCardInfo } from "./ShipCollection";
+import { useDispatch } from "react-redux";
+import { setActiveKey } from "../store/starshipsSlice";
+import { FormWrapper, StyledInput } from "./Login";
 
 export const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -20,15 +23,17 @@ export const Register = () => {
         })
         .then((response) => {
             localStorage.setItem("token", response.data.token);
-            navigate("/");
+            dispatch(setActiveKey('/starships'));
+            navigate("/starships");
         })
         .catch((error) => {
             setError(error);
-            console.log(error)
+            console.log(error);
         })
     };
 
     const backHome = () => {
+        dispatch(setActiveKey('/home'));
         navigate("/home")
     }
 

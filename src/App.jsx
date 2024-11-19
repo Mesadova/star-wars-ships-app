@@ -1,5 +1,13 @@
 import { createGlobalStyle  } from 'styled-components'
 import MainPageNav from './components/MainPageNav'
+import { Routes, Route, useNavigate } from "react-router-dom";
+import Home from './components/Home';
+import RenderSingularStarship from './components/RenderSingularStarship.jsx'
+import RenderShipCollection from './components/RenderShipCollection'
+import { ProtectedRoute } from './components/ProtectedRoute.jsx'
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectActiveKey } from './store/starshipsSlice.js';
 
 export const GlobalStyle = createGlobalStyle`
   body {
@@ -17,11 +25,28 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 const App = () => {
+  const isAuthenticated = !!localStorage.getItem("token");
+  const navigate = useNavigate();
+  const activeKey = useSelector(selectActiveKey);
+
+  useEffect(() => {
+    navigate(activeKey)
+  }, []);
+
   return (
-    <div>
+    <>
       <GlobalStyle />
       <MainPageNav />
-    </div>
+      <Routes>
+        <Route path='/home' element={<Home />} />
+        <Route element={<ProtectedRoute canActivate={isAuthenticated} />}>
+          <Route path='/starships'>
+              <Route index element={<RenderShipCollection />} />
+              <Route path=':shipName' element={<RenderSingularStarship />} />
+          </Route>
+        </Route>
+      </Routes>
+    </>
   )
 }
 

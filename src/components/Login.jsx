@@ -5,6 +5,8 @@ import { GlobalStyle } from "../App";
 import { StarshipButton } from "./MainBanner";
 import { ShipCardInfo } from "./ShipCollection";
 import styled from "styled-components";
+import { useDispatch } from "react-redux";
+import { setActiveKey } from "../store/starshipsSlice";
 
 export const FormWrapper = styled.div`
     display: flex;
@@ -22,6 +24,7 @@ export const Login = () => {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -31,14 +34,16 @@ export const Login = () => {
         })
         .then((response) => {
             localStorage.setItem("token", response.data.token);
+            dispatch(setActiveKey('/starships'));
             navigate("/starships");
         })
         .catch((error) => {
             setError(error);
+            console.log(error);
         })
     };
-
     const backHome = () => {
+        dispatch(setActiveKey('/home'));
         navigate("/home")
     }
 
