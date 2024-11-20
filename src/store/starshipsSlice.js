@@ -1,21 +1,47 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from 'axios'
+import axios from 'axios';
+
+export const fetchStarships = createAsyncThunk(
+    'starships/fetchStarships',
+    async (pageNumber) => {
+        const response = await axios.get(`https://swapi.dev/api/starships/?page=${pageNumber}`);
+        return response.data.results;
+    }
+);
+
+export const fetchPilotsNames = createAsyncThunk(
+    'starships/fetchPeople',
+    async (peopleNumber) => {
+        const response = await axios.get(`https://swapi.dev/api/people/${peopleNumber}/`);
+        return response.data.name.toUpperCase();
+    }
+);
+
+export const fetchFilmsNames = createAsyncThunk(
+    'starships/fetchFilms',
+    async (filmNumber) => {
+        const response = await axios.get(`https://swapi.dev/api/films/${filmNumber}/`);
+        return {title: response.data.title, episode_id: response.data.episode_id };
+    }
+);
+
+const initialState = {
+    starshipCollection: [],
+    pilotsNames: [],
+    pilotsNumbers: [],
+    filmsNames: [],
+    filmsNumbers: [],
+    starshipToShow: {},
+    activeKey: '/home',
+    status: 'idle',
+    error: null,
+    loading: true,
+    hasMore: true,
+}
 
 export const starshipsSlice = createSlice({
     name: 'starships',
-    initialState: {
-        starshipCollection: [],
-        pilotsNames: [],
-        pilotsNumbers: [],
-        filmsNames: [],
-        filmsNumbers: [],
-        starshipToShow: {},
-        activeKey: '/home',
-        status: 'idle',
-        error: null,
-        loading: true,
-        hasMore: true,
-    },
+    initialState,
     reducers: {
         reset: state => {
             state.starshipCollection = [],
@@ -67,32 +93,6 @@ export const starshipsSlice = createSlice({
     }
 });
 
-export const fetchStarships = createAsyncThunk(
-    'starships/fetchStarships',
-    async (pageNumber) => {
-        const response = await axios.get(`https://swapi.dev/api/starships/?page=${pageNumber}`);
-        return response.data.results;
-    }
-);
-
-export const fetchPilotsNames = createAsyncThunk(
-    'starships/fetchPeople',
-    async (peopleNumber) => {
-        const response = await axios.get(`https://swapi.dev/api/people/${peopleNumber}/`);
-        return response.data.name.toUpperCase();
-    }
-);
-
-export const fetchFilmsNames = createAsyncThunk(
-    'starships/fetchFilms',
-    async (filmNumber) => {
-        const response = await axios.get(`https://swapi.dev/api/films/${filmNumber}/`);
-        return {title: response.data.title, episode_id: response.data.episode_id };
-    }
-);
-
-export default starshipsSlice.reducer;
-
 //--- Actions
 export const { reset, setStarshipToShow, setPilotsNumbers, setFilmsNumbers, setActiveKey } = starshipsSlice.actions
 
@@ -106,3 +106,5 @@ export const selectPilotsNumbers = (state) => state.starships.pilotsNumbers
 export const selectFilmsNames = (state) => state.starships.filmsNames
 export const selectFilmsNumbers = (state) => state.starships.filmsNumbers
 export const selectActiveKey = (state) => state.starships.activeKey
+
+export default starshipsSlice.reducer;

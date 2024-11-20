@@ -62,11 +62,8 @@ const MainPageNav = () => {
       <MainBanner />
       <TabsWrapper>
         <Tabs id="main-menu-tabs" activeKey={activeKey} onSelect={handleSelect} >
-          <Tab eventKey="/home" title="HOME">
-          </Tab>
-          <Tab eventKey="/starships" title="STARSHIPS" className={'tab'}>
-            
-          </Tab>
+          <Tab eventKey="/home" title="HOME" />
+          <Tab eventKey="/starships" title="STARSHIPS" />
         </Tabs>
       </TabsWrapper>
     </>

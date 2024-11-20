@@ -1,6 +1,6 @@
 import { createGlobalStyle  } from 'styled-components'
 import MainPageNav from './components/MainPageNav'
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, Router, useNavigate } from "react-router-dom";
 import Home from './components/Home';
 import RenderSingularStarship from './components/RenderSingularStarship.jsx'
 import RenderShipCollection from './components/RenderShipCollection'
@@ -37,15 +37,15 @@ const App = () => {
     <>
       <GlobalStyle />
       <MainPageNav />
-      <Routes>
-        <Route path='/home' element={<Home />} />
-        <Route element={<ProtectedRoute canActivate={isAuthenticated} />}>
-          <Route path='/starships'>
-              <Route index element={<RenderShipCollection />} />
-              <Route path=':shipName' element={<RenderSingularStarship />} />
+        <Routes>
+          <Route path='/home' element={<Home />} />
+          <Route element={<ProtectedRoute canActivate={isAuthenticated} />}>
+            <Route path='/starships'>
+                <Route index element={<RenderShipCollection />} />
+                <Route path=':shipName' element={<RenderSingularStarship />} />
+            </Route>
           </Route>
-        </Route>
-      </Routes>
+        </Routes>
     </>
   )
 }
