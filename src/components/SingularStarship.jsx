@@ -52,7 +52,6 @@ const SingularStarship = ({ starshipId }) => {
     img.src = `../src/assets/${starshipId}.jpg`;
   }
   
-  
   return (
     <>
       <StarshipBanner>

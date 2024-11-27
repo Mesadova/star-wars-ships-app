@@ -2,19 +2,16 @@ import { render } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { setupStore } from "../store/store";
 
-export const renderWithProvider = (ui, extendedRenderOptions = {}) => {
-    const {
+export const renderWithProviders = (
+    ui, 
+    {
         preloadedState = {},
         store = setupStore(preloadedState),
         ...renderOptions
-    } = extendedRenderOptions
-
-    const Wrapper = ({ children }) => (
-        <Provider store={store}>{children}</Provider>
-    )
-
-    return {
-        store,
-        ...render(ui, { wrapper: Wrapper, ...renderOptions })
+    } = {},
+) => {
+    const Wrapper = ({ children }) => {
+        return <Provider store={store}>{children}</Provider>
     }
+    return {store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) }
 }

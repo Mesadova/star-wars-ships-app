@@ -57,4 +57,4 @@ const RenderShipCollection = () => {
   )
 }
 
-export default RenderShipCollection
+export default RenderShipCollection;

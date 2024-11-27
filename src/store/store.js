@@ -11,11 +11,3 @@ export const setupStore = preloadedState => {
         preloadedState
     })
 }
-
-const store = configureStore({
-    reducer: {
-        starships: starshipsReducer
-    }
-});
-
-export default store;
