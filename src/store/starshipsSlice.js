@@ -62,6 +62,9 @@ export const starshipsSlice = createSlice({
         },
         setActiveKey: (state, action) => {
             state.activeKey = action.payload
+        },
+        setFilmsNames: (state, action) => {
+            state.filmsNames = state.filmsNames.concat(action.payload)
         }
     },
     extraReducers: (builder) => {
@@ -94,7 +97,7 @@ export const starshipsSlice = createSlice({
 });
 
 //--- Actions
-export const { reset, setStarshipToShow, setPilotsNumbers, setFilmsNumbers, setActiveKey } = starshipsSlice.actions
+export const { reset, setStarshipToShow, setPilotsNumbers, setFilmsNumbers, setActiveKey, setFilmsNames } = starshipsSlice.actions
 
 //--- Selectors
 export const selectStarshipsCollection = (state) => state.starships.starshipCollection
