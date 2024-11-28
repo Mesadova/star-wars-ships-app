@@ -11,8 +11,9 @@ describe("SingularStarship", () => {
   test('Before dispatching the Starship to render the component is loading', () => {
     const store = setupStore()
     renderWithProviders(<SingularStarship />, { store })
-    expect(screen.getByText("Loading...")).toBeDefined();
-    expect(screen.queryByText("CR90 corvette")).toBeNull();
+
+    expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
+    expect(screen.queryByText(/CR90 corvette/i)).not.toBeInTheDocument();
   })
 
   test('Sets up initial state and checks that the component renders the information', () => {
@@ -44,10 +45,9 @@ describe("SingularStarship", () => {
     act(() => {
       store.dispatch(setStarshipToShow(starshipsToShow))
     })
-    
-    expect(screen.findByText("CR90 corvette")).toBeDefined();
-    expect(screen.queryByText("Loading...")).toBeNull();
-    screen.debug()
+
+    expect(screen.getByText(/Corellian Engineering Corporation/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Loading.../i)).not.toBeInTheDocument();
 
   })
 });
