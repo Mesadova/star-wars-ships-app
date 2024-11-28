@@ -45,9 +45,8 @@ describe("RenderFilms", () => {
     })
     renderWithProviders(<RenderFilms />, { store })
 
-    expect(screen.findByText("RETURN OF THE JEDI")).toBeDefined();
-    expect(screen.queryByText("A NEW HOPE")).not.toBeInTheDocument();
-
+    expect(screen.getByText(/RETURN OF THE JEDI/i)).toBeInTheDocument();
+    expect(screen.queryByText(/A NEW HOPE/i)).not.toBeInTheDocument();
   })
 });
 
