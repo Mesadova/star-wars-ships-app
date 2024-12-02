@@ -13,20 +13,20 @@ export const StarshipCard = styled.div`
   background-color: #212529;
   border-radius: 10px;
   color: #a1a09c;
-  width: 180vh;
+  width: 80%;
   font-size: 16px;
   margins: 0px;
   padding: 0px;
   overflow: hidden;
 
   &.pilots {
-    width: 40vh;
+    width: 40%;
     align-items: center;
   }
 `
 
 export const StarshipBanner = styled.div`
-  width: 180vh;
+  width: 80%;
   border: solid;
   border-color: #a7a4a4;
   border-width: 2px 0 2px 0;
