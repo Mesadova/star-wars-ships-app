@@ -17,7 +17,7 @@ export const FormWrapper = styled.div`
 
 export const StyledInput = styled.input`
     border-radius: 10px;
-    width: 60vh;
+    width: 65vh;
 `
 
 export const LoginModal = (props) => {
@@ -51,11 +51,12 @@ export const LoginModal = (props) => {
     size="lg"
     aria-labelledby="contained-modal-title-vcenter"
     centered
+    data-bs-theme="dark"
     >
         <Modal.Header closeButton >
             <Modal.Title id="contained-modal-title-vcenter">
                 <FormWrapper>
-                    <ShipCardInfo $size='35px' $colorText='yellow' >Login</ShipCardInfo>
+                    <ShipCardInfo $size='30px' $colorText='yellow' >Login</ShipCardInfo>
                     <ShipCardInfo>( email: "eve.holt@reqres.in" )</ShipCardInfo>
                     <ShipCardInfo>( password: "cityslicka" )</ShipCardInfo>
                 </FormWrapper>
@@ -72,15 +73,18 @@ export const LoginModal = (props) => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                        <StyledInput
-                            type="password"
-                            placeholder="Password..."
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
-                        
                     </FormWrapper>
-                    <StarshipButton type="submit">Login</StarshipButton>
+                    <FormWrapper>
+                        <StyledInput
+                                type="password"
+                                placeholder="Password..."
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                            />
+                    </FormWrapper>
+                    <FormWrapper>
+                        <StarshipButton type="submit">Login</StarshipButton>
+                    </FormWrapper>
                 </form>
                 {error && <p style={{ color: "red" }}>{error}</p>}
             </div>
