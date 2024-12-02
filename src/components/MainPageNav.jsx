@@ -5,7 +5,6 @@ import { MainBanner } from './MainBanner.jsx'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectActiveKey, setActiveKey } from '../store/starshipsSlice.js'
-import { LoginModal } from './LoginModal.jsx'
 
 export const TabsWrapper = styled.div.attrs(props => ({
   $divWidth: props.$divWidth || 'auto',
