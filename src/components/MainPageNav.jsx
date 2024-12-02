@@ -5,6 +5,7 @@ import { MainBanner } from './MainBanner.jsx'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectActiveKey, setActiveKey } from '../store/starshipsSlice.js'
+import { LoginModal } from './LoginModal.jsx'
 
 export const TabsWrapper = styled.div.attrs(props => ({
   $divWidth: props.$divWidth || 'auto',
@@ -40,7 +41,7 @@ export const TabsWrapper = styled.div.attrs(props => ({
   }
 `
 
-const MainPageNav = () => {
+const MainPageNav = ({setShowLoginModal, setShowRegisterModal}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const activeKey = useSelector(selectActiveKey);
@@ -59,7 +60,7 @@ const MainPageNav = () => {
 
   return (
     <>
-      <MainBanner />
+      <MainBanner setShowLoginModal={setShowLoginModal} setShowRegisterModal={setShowRegisterModal}/>
       <TabsWrapper>
         <Tabs id="main-menu-tabs" activeKey={activeKey} onSelect={handleSelect} >
           <Tab eventKey="/home" title="HOME" />

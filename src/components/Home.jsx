@@ -15,6 +15,7 @@ const Home = () => {
   const isAuthenticated = !!localStorage.getItem("token");
 
   return (
+    <>
     <ShipsContainer>
       <ShipCardInfo $size='35px' $colorText='yellow'>Welcome to the Star Wars ship catalog</ShipCardInfo>
       {isAuthenticated ? (
@@ -22,10 +23,11 @@ const Home = () => {
       ) : (
         <ShipsContainer>
           <p>Login required to access the catalog</p>
-          <a style={{color: 'white'}} href="/login">LOGIN</a>
         </ShipsContainer>
       )}
     </ShipsContainer>
+    
+    </>
   );
 };
 
